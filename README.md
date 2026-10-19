@@ -60,3 +60,21 @@ npm run build      # type-check and production build into dist/
 | `src/` | The admin console (`src/pages/*`) |
 | `packages/` | Shared code: types, validation, API client, UI kit, design tokens, demo database |
 | `supabase/` | Database migrations and the plans seed (identical to the owner dashboard's) |
+
+## Deploy (Cloudflare)
+
+The app is a static site served by a Cloudflare Worker with static assets
+(`wrangler.jsonc`). Client-side routes fall back to `index.html`.
+
+```bash
+npx wrangler login     # once
+npm run deploy         # builds in demo mode and deploys
+```
+
+Live demo: https://pg-sathi-super-admin.prathviholla67.workers.dev
+
+`npm run deploy` builds with `.env.demo` (`VITE_ENABLE_DEMO=true`), so the
+public site runs the labelled demo with fictional data. When you connect
+Supabase, set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`, then
+run `npm run build && npx wrangler deploy`. Only the public (anon) key belongs
+in the build.

@@ -14,7 +14,9 @@
     "dev": "vite --port 5174",
     "build": "tsc -p tsconfig.json && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "build:demo": "tsc -p tsconfig.json && vite build --mode demo",
+    "deploy": "npm run build:demo && wrangler deploy"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
@@ -22,6 +24,7 @@
     "@pg/demo-db": "0.1.0",
     "@pg/design-tokens": "0.1.0",
     "@pg/shared": "0.1.0",
+    "@pg/ui-web": "0.1.0",
     "@pg/validation": "0.1.0",
     "@tanstack/react-query": "^5.90.7",
     "class-variance-authority": "^0.7.1",
@@ -34,18 +37,18 @@
     "recharts": "^3.2.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
-    "zod": "^4.1.12",
-    "@pg/ui-web": "0.1.0"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.16",
+    "@types/node": "^22.18.0",
     "@types/react": "~19.2.2",
     "@types/react-dom": "~19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
     "tailwindcss": "^4.1.16",
-    "vite": "^7.1.12",
     "typescript": "~5.9.3",
-    "@types/node": "^22.18.0"
+    "vite": "^7.1.12",
+    "wrangler": "^4.151.2"
   },
   "overrides": {
     "react": "19.3.0",

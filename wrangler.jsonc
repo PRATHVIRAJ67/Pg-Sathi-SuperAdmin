@@ -1,0 +1,11 @@
+{
+  // Static site on Cloudflare Workers (assets only, no server code).
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "pg-sathi-super-admin",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Serve index.html for client-side routes like /tenants/:id.
+    "not_found_handling": "single-page-application"
+  }
+}
