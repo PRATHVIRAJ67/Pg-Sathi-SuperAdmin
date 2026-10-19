@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+@import '@pg/design-tokens/theme.css';
+
+@source '../packages/**/*.{ts,tsx}';
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-sm;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-600;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--color-gray-100) 0%, var(--color-gray-50) 50%, var(--color-gray-100) 100%);
+  background-size: 800px 100%;
+  animation: var(--animate-shimmer);
+}
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}

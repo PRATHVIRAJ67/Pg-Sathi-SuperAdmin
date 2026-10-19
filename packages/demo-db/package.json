@@ -1,0 +1,16 @@
+{
+  "name": "@pg/demo-db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Runs the real Supabase migrations inside PGlite (Postgres compiled to WASM) for demo mode and database tests.",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "typecheck": "tsc -p tsconfig.json" },
+  "dependencies": {
+    "@electric-sql/pglite": "~0.3.16",
+    "@pg/api-client": "0.1.0",
+    "@pg/shared": "0.1.0"
+  }
+}

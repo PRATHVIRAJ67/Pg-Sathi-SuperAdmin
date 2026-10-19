@@ -1,0 +1,86 @@
+/*
+ * Tailwind v4 theme for the web dashboards. Mirrors src/index.ts.
+ * Import after `@import "tailwindcss";`.
+ */
+@theme {
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-navy-950: #0b1326;
+  --color-navy-900: #14213d;
+  --color-navy-800: #1e2e52;
+  --color-navy-700: #2a3c66;
+
+  --color-accent-50: #eeeefd;
+  --color-accent-100: #e0e0fb;
+  --color-accent-200: #c4c4f6;
+  --color-accent-500: #6c6de8;
+  --color-accent-600: #5b5ce2;
+  --color-accent-700: #4a4bc9;
+  --color-accent-800: #3b3ca3;
+
+  --color-success-50: #e8f7f1;
+  --color-success-100: #cdefe2;
+  --color-success-600: #0f9f75;
+  --color-success-700: #0b7f5d;
+
+  --color-warning-50: #fdf5e6;
+  --color-warning-100: #fae8c3;
+  --color-warning-600: #d99018;
+  --color-warning-700: #a86c0c;
+
+  --color-danger-50: #fceded;
+  --color-danger-100: #f8d7d7;
+  --color-danger-600: #d64545;
+  --color-danger-700: #b23434;
+
+  --color-info-50: #eaf3fd;
+  --color-info-600: #2f6fd6;
+
+  --color-gray-25: #fbfbfd;
+  --color-gray-50: #f6f7fb;
+  --color-gray-100: #eef0f5;
+  --color-gray-200: #e3e6ee;
+  --color-gray-300: #cdd2de;
+  --color-gray-400: #98a1b3;
+  --color-gray-500: #667085;
+  --color-gray-600: #4b5565;
+  --color-gray-700: #344054;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #182230;
+
+  --color-background: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-border: #e3e6ee;
+  --color-foreground: #182230;
+  --color-muted: #667085;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 12px 24px -6px rgba(16, 24, 40, 0.12), 0 4px 8px -4px rgba(16, 24, 40, 0.05);
+
+  --text-2xs: 11px;
+  --text-2xs--line-height: 16px;
+
+  --animate-fade-in: fade-in 160ms ease-out;
+  --animate-slide-up: slide-up 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(6px) scale(0.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+}

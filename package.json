@@ -1,0 +1,54 @@
+{
+  "name": "pg-sathi-super-admin",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Pg Sathi — platform super-admin: tenants, plans, audit log and platform settings.",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite --port 5174",
+    "build": "tsc -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@pg/api-client": "0.1.0",
+    "@pg/demo-db": "0.1.0",
+    "@pg/design-tokens": "0.1.0",
+    "@pg/shared": "0.1.0",
+    "@pg/validation": "0.1.0",
+    "@tanstack/react-query": "^5.90.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.553.0",
+    "radix-ui": "^1.4.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router": "^7.9.5",
+    "recharts": "^3.2.1",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.12",
+    "@pg/ui-web": "0.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.16",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "tailwindcss": "^4.1.16",
+    "vite": "^7.1.12",
+    "typescript": "~5.9.3",
+    "@types/node": "^22.18.0"
+  },
+  "overrides": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  }
+}

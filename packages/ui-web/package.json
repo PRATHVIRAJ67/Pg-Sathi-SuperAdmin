@@ -1,0 +1,27 @@
+{
+  "name": "@pg/ui-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared web UI primitives (Radix + Tailwind tokens) for the owner and super-admin dashboards.",
+  "exports": {
+    "./ui/*": "./src/ui/*.tsx",
+    "./common": "./src/common.tsx",
+    "./charts": "./src/charts.tsx",
+    "./utils": "./src/utils.ts"
+  },
+  "scripts": { "typecheck": "tsc -p tsconfig.json" },
+  "dependencies": {
+    "@pg/api-client": "0.1.0",
+    "@pg/design-tokens": "0.1.0",
+    "@pg/shared": "0.1.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.553.0",
+    "radix-ui": "^1.4.3",
+    "recharts": "^3.2.1",
+    "tailwind-merge": "^3.3.1"
+  },
+  "peerDependencies": { "react": "*" },
+  "devDependencies": { "@types/react": "~19.2.2", "react": "19.3.0" }
+}
