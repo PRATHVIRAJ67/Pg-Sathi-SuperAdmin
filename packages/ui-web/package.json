@@ -8,9 +8,12 @@
     "./ui/*": "./src/ui/*.tsx",
     "./common": "./src/common.tsx",
     "./charts": "./src/charts.tsx",
-    "./utils": "./src/utils.ts"
+    "./utils": "./src/utils.ts",
+    "./brand": "./src/brand.tsx"
   },
-  "scripts": { "typecheck": "tsc -p tsconfig.json" },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "@pg/api-client": "0.1.0",
     "@pg/design-tokens": "0.1.0",
@@ -22,6 +25,11 @@
     "recharts": "^3.2.1",
     "tailwind-merge": "^3.3.1"
   },
-  "peerDependencies": { "react": "*" },
-  "devDependencies": { "@types/react": "~19.2.2", "react": "19.3.0" }
+  "peerDependencies": {
+    "react": "*"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "react": "19.3.0"
+  }
 }

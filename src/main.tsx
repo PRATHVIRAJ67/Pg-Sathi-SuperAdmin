@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes } from 'react-router';
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
-import { Activity, Building2, FlaskConical, Gauge, Layers, LogOut, Settings2, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { Activity, Building2, FlaskConical, Gauge, Layers, LogOut, Settings2, ShieldAlert } from 'lucide-react';
 import { AppError, type AuthSession } from '@pg/api-client';
 import { BackendProvider, useBackend } from '@pg/api-client/react';
 import { Button } from '@pg/ui-web/ui/button';
@@ -11,6 +11,7 @@ import { Input } from '@pg/ui-web/ui/form-controls';
 import { TooltipProvider } from '@pg/ui-web/ui/overlays';
 import { EmptyState, Field, InlineError } from '@pg/ui-web/common';
 import { cn } from '@pg/ui-web/utils';
+import { PgSathiMark } from '@pg/ui-web/brand';
 import '@fontsource-variable/inter';
 import './index.css';
 import { bootBackend, type BootResult } from './backend';
@@ -30,9 +31,7 @@ const queryClient = new QueryClient({
 
 function Mark() {
   return (
-    <span className="flex size-8 items-center justify-center rounded-lg bg-navy-900 text-white">
-      <ShieldCheck className="size-4" aria-hidden />
-    </span>
+    <PgSathiMark className="size-8" />
   );
 }
 
@@ -82,7 +81,7 @@ function SignIn() {
       <div className="w-full max-w-sm rounded-xl bg-white p-8 shadow-lg">
         <div className="flex items-center gap-2.5">
           <Mark />
-          <span className="text-[15px] font-semibold text-gray-900">Staywise Admin</span>
+          <span className="text-[15px] font-semibold text-gray-900">PG Sathi Admin</span>
         </div>
         <h1 className="mt-8 text-xl font-semibold text-gray-900">Platform operator sign-in</h1>
         <p className="mt-1 text-[13px] text-gray-500">Access is limited to accounts granted platform-admin rights by an operator.</p>
@@ -134,7 +133,7 @@ function Shell({ email, children }: { email: string | null; children: ReactNode 
         <aside className="flex shrink-0 flex-col bg-navy-950 text-white lg:sticky lg:top-0 lg:h-dvh lg:w-60">
           <div className="flex h-14 items-center gap-2.5 px-5">
             <Mark />
-            <span className="text-[15px] font-semibold">Staywise Admin</span>
+            <span className="text-[15px] font-semibold">PG Sathi Admin</span>
           </div>
           <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-1 lg:flex-col lg:pb-0 lg:pt-4" aria-label="Main">
             {NAV.map((n) => (
