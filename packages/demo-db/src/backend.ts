@@ -1,4 +1,4 @@
-import { createAdminService, createDataService } from '@pg/api-client';
+import { AppError, createAdminService, createDataService, type ResidentAccessService } from '@pg/api-client';
 import { createDemoAuth, createPgliteTransport, openDatabase, type KeyValueStorage, type SqlFile } from './database';
 import { DEMO_ACCOUNT, DEMO_ADMIN_ACCOUNT, seedDemoPlatformAdmin, seedDemoWorkspace } from './demo-seed';
 
@@ -63,12 +63,58 @@ export async function createDemoBackend(options: DemoBackendOptions) {
 
   const transport = createPgliteTransport(db, () => auth.currentUserId());
 
+  // Demo stand-in for the server-side app-login service: same checks, run
+  // directly against the in-browser database.
+  async function authorize(residentId: string) {
+    const caller = auth.currentUserId();
+    if (!caller) throw new AppError('not_authenticated', 'Sign in to continue.');
+    const res = await db.query<{ tenant_id: string; role: string | null }>(
+      `select r.tenant_id, m.role
+         from public.residents r
+         left join public.tenant_memberships m
+           on m.tenant_id = r.tenant_id and m.user_id = $2 and m.status = 'active'
+        where r.id = $1`,
+      [residentId, caller],
+    );
+    const row = res.rows[0];
+    if (!row || !row.role) throw new AppError('not_found', 'Resident not found.');
+    if (row.role !== 'owner' && row.role !== 'manager') throw new AppError('forbidden', 'Only the owner or a manager can manage resident app logins.');
+    const link = await db.query<{ user_id: string }>('select user_id from public.resident_user_links where resident_id = $1', [residentId]);
+    return { tenantId: row.tenant_id, caller, linkedUser: link.rows[0]?.user_id ?? null };
+  }
+  const residentAccess: ResidentAccessService = {
+    available: true,
+    async create(residentId, email, password) {
+      const { tenantId, linkedUser } = await authorize(residentId);
+      if (linkedUser) throw new AppError('duplicate', 'This resident already has an app login. Use "Reset password" instead.');
+      const normalized = email.trim().toLowerCase();
+      const userId = await auth.createUser({ email: normalized, password, confirmed: true });
+      await db.query('insert into public.resident_user_links (tenant_id, resident_id, user_id) values ($1, $2, $3)', [tenantId, residentId, userId]);
+      await db.query('update public.residents set email = $2 where id = $1', [residentId, normalized]);
+      return { email: normalized };
+    },
+    async resetPassword(residentId, password) {
+      const { linkedUser } = await authorize(residentId);
+      if (!linkedUser) throw new AppError('no_access', 'This resident does not have an app login yet.');
+      if (password.length < 8) throw new AppError('validation', 'Password must be at least 8 characters.');
+      await db.query(
+        `update auth.users set encrypted_password = encode(sha256(convert_to(email || ':' || $2, 'UTF8')), 'hex') where id = $1`,
+        [linkedUser, password],
+      );
+    },
+    async revoke(residentId) {
+      await authorize(residentId);
+      await db.query('delete from public.resident_user_links where resident_id = $1', [residentId]);
+    },
+  };
+
   return {
     db,
     auth,
     transport,
     data: createDataService(transport),
     admin: createAdminService(transport),
+    residentAccess,
     sampleAccount: options.withPlatformAdmin ? DEMO_ADMIN_ACCOUNT : DEMO_ACCOUNT,
     async reset() {
       await db.close();

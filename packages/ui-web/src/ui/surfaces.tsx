@@ -68,7 +68,8 @@ export function Separator({ className }: { className?: string }) {
 }
 
 export function Avatar({ name, className }: { name: string; className?: string }) {
-  const parts = name.trim().split(/\s+/);
+  // Skip words like "(demo)" so initials are letters/digits only.
+  const parts = name.trim().split(/\s+/).filter((w) => /^[\p{L}\p{N}]/u.test(w));
   const initials = ((parts[0]?.[0] ?? '') + (parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? '') : '')).toUpperCase() || '?';
   // Deterministic tint from the name, purely decorative.
   const tints = ['bg-accent-50 text-accent-700', 'bg-success-50 text-success-700', 'bg-warning-50 text-warning-700', 'bg-info-50 text-info-600', 'bg-gray-100 text-gray-700'];

@@ -5,3 +5,4 @@ export * from './supabase';
 export * from './uuid';
 export * from './snapshot';
 export * from './gateway';
+export * from './resident-access';

@@ -1,6 +1,7 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import type { AdminService, DataService } from '../service';
 import type { AuthAdapter, FileStorage } from '../transport';
+import type { ResidentAccessService } from '../resident-access';
 
 export type BackendMode = 'supabase' | 'demo' | 'demo-snapshot';
 
@@ -20,6 +21,8 @@ export interface Backend {
   admin: AdminService;
   auth: AuthAdapter;
   storage: FileStorage;
+  /** Owner-side resident app logins (owner dashboard only). */
+  residentAccess?: ResidentAccessService;
   demo?: DemoControls;
 }
 
