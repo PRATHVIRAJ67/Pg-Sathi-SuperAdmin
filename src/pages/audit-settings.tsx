@@ -76,10 +76,10 @@ export function PlatformSettingsPage() {
       <Card>
         <CardHeader title="Sign-ups" />
         <CardBody>
-          <FormSection title="Self-service onboarding" description="When paused, new accounts can sign up but cannot create a workspace.">
+          <FormSection title="Who can create a business" description="Off = invite-only: only owners you invite from Tenants → Invite owner can create a business. Anyone else can make an account but is told to ask for an invitation.">
             <label className="flex items-center gap-3">
               <Switch checked={signup} onCheckedChange={setSignup} />
-              <span className="text-[13px] text-gray-700">Allow new businesses to create workspaces</span>
+              <span className="text-[13px] text-gray-700">{signup ? 'Anyone can sign up and create a business' : 'Invite-only: only invited owners'}</span>
             </label>
           </FormSection>
           <FormSection title="Default plan" description="Assigned automatically to new workspaces during provisioning.">

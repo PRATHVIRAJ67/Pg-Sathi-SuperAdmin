@@ -4,6 +4,9 @@ import type {
   AdminPlan,
   AdminTenantDetail,
   AdminTenantRow,
+  OwnerInvite,
+  OwnerInviteInput,
+  OwnerInviteStatus,
   AuditLogEntry,
   ChargeTemplate,
   DashboardSummary,
@@ -307,6 +310,11 @@ export function createDataService(transport: RpcTransport) {
 
     // Session & workspace -----------------------------------------------------
     myContext: () => call<UserContext>('my_context'),
+    /** Works signed out: is sign-up open or invite-only? */
+    signupStatus: () => call<{ open: boolean }>('signup_status'),
+    /** The signed-in person's pending owner invite (to prefill onboarding), or null. */
+    myOwnerInvite: () =>
+      call<{ business_name: string | null; owner_name: string | null; phone: string | null; plan_name: string | null } | null>('my_owner_invite'),
     provisionWorkspace: (input: ProvisionWorkspaceInput) =>
       call<UUID>('provision_workspace', {
         p_request_id: input.requestId,
@@ -483,6 +491,9 @@ export function createAdminService(transport: RpcTransport) {
     getSettings: () => call<PlatformSettings>('admin_get_settings'),
     updateSettings: (patch: Partial<Pick<PlatformSettings, 'default_plan_id' | 'signup_enabled' | 'support_email'>>) =>
       call<void>('admin_update_settings', { p_data: compact(patch) }),
+    listOwnerInvites: (status: OwnerInviteStatus | 'all' = 'all') => call<OwnerInvite[]>('admin_list_owner_invites', { p_status: status }),
+    inviteOwner: (input: OwnerInviteInput) => call<{ id: UUID; email: string }>('admin_invite_owner', { p_data: compact(input) }),
+    revokeOwnerInvite: (inviteId: UUID) => call<void>('admin_revoke_owner_invite', { p_invite_id: inviteId }),
   };
 }
 

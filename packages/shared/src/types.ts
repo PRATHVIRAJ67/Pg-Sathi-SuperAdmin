@@ -767,6 +767,36 @@ export interface AdminAuditEntry {
   actor_email: string | null;
 }
 
+/** An owner invited from the super-admin console. */
+export type OwnerInviteStatus = 'pending' | 'accepted' | 'revoked';
+export interface OwnerInvite {
+  id: UUID;
+  email: string;
+  business_name: string | null;
+  owner_name: string | null;
+  phone: string | null;
+  note: string | null;
+  status: OwnerInviteStatus;
+  plan_id: UUID | null;
+  plan_name: string | null;
+  tenant_id: UUID | null;
+  tenant_name: string | null;
+  created_at: Timestamp;
+  accepted_at: Timestamp | null;
+  revoked_at: Timestamp | null;
+  /** The invitee has created a login (they may not have finished onboarding). */
+  has_account: boolean;
+}
+
+export interface OwnerInviteInput {
+  email: string;
+  business_name?: string | null;
+  owner_name?: string | null;
+  phone?: string | null;
+  plan_id?: UUID | null;
+  note?: string | null;
+}
+
 export interface PlatformSettings {
   default_plan_id: UUID | null;
   signup_enabled: boolean;

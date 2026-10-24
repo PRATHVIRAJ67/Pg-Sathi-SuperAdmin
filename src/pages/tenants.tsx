@@ -2,7 +2,7 @@ import { useDeferredValue, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { ArrowLeft, Building2, Lock } from 'lucide-react';
+import { ArrowLeft, Building2, Lock, UserPlus } from 'lucide-react';
 import { queryKeys, useAdminMutation, useBackend } from '@pg/api-client/react';
 import { ROLE_LABELS, SUBSCRIPTION_STATUS_LABELS, TENANT_STATUS_LABELS, formatDate, formatDateTime, formatINR, type SubscriptionStatus, type TenantStatus } from '@pg/shared';
 import { Button } from '@pg/ui-web/ui/button';
@@ -11,6 +11,8 @@ import { Badge, Card, CardBody, CardHeader, Progress, Skeleton } from '@pg/ui-we
 import { Dialog, DialogContent } from '@pg/ui-web/ui/overlays';
 import { Table, TBody, TD, TH, THead, TR } from '@pg/ui-web/ui/table';
 import { EmptyState, ErrorState, Field, InlineError, KeyValue, PageHeader, Pagination, SearchInput, TableSkeleton, TenantStatusBadge } from '@pg/ui-web/common';
+
+import { InviteOwnerDialog, OwnerInvitesCard } from './invites';
 
 const PAGE = 25;
 
@@ -21,12 +23,23 @@ export function TenantsPage() {
   const deferred = useDeferredValue(search);
   const [status, setStatus] = useState<TenantStatus | ''>('');
   const [offset, setOffset] = useState(0);
+  const [inviting, setInviting] = useState(false);
   const params = { search: deferred.trim() || undefined, status: status || null, limit: PAGE, offset };
   const q = useQuery({ queryKey: queryKeys.admin.tenants(params), queryFn: () => admin.listTenants(params) });
 
   return (
     <div>
-      <PageHeader title="Tenants" description="Every business that has signed up. Each one provisioned itself through self-service onboarding." />
+      <PageHeader
+        title="Tenants"
+        description="Every business on PG Sathi. Invite an owner, they sign up with that email and set up their own PG."
+        actions={
+          <Button onClick={() => setInviting(true)}>
+            <UserPlus /> Invite owner
+          </Button>
+        }
+      />
+      <OwnerInvitesCard onInvite={() => setInviting(true)} />
+      <InviteOwnerDialog open={inviting} onOpenChange={setInviting} />
       <Card>
         <div className="flex flex-col gap-3 border-b border-gray-100 p-4 sm:flex-row sm:items-center sm:justify-between">
           <SearchInput value={search} onChange={(v) => { setSearch(v); setOffset(0); }} placeholder="Business, email or city" />
