@@ -31,7 +31,11 @@ export interface AuthAdapter {
   signUp(input: { email: string; password: string; fullName?: string; redirectTo?: string }): Promise<SignUpResult>;
   signIn(input: { email: string; password: string }): Promise<AuthSession>;
   sendEmailOtp(email: string, redirectTo?: string): Promise<void>;
-  verifyEmailOtp(email: string, token: string): Promise<AuthSession>;
+  /**
+   * Checks a 6-digit code from an email. 'email' = sign-in code, 'signup' = confirm a
+   * new account, 'recovery' = reset password (sign in, then call updatePassword).
+   */
+  verifyEmailOtp(email: string, token: string, type?: 'email' | 'signup' | 'recovery'): Promise<AuthSession>;
   resendVerification(email: string, redirectTo?: string): Promise<void>;
   requestPasswordReset(email: string, redirectTo?: string): Promise<void>;
   updatePassword(password: string): Promise<void>;

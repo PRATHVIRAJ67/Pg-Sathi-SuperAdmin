@@ -76,8 +76,8 @@ export function createSupabaseBackend(config: SupabaseConfig) {
       const { error } = await client.auth.signInWithOtp({ email, options: { emailRedirectTo: redirectTo, shouldCreateUser: true } });
       if (error) throw authError(error);
     },
-    async verifyEmailOtp(email, token) {
-      const { data, error } = await client.auth.verifyOtp({ email, token, type: 'email' });
+    async verifyEmailOtp(email, token, type = 'email') {
+      const { data, error } = await client.auth.verifyOtp({ email, token, type });
       if (error) throw authError(error);
       const session = toSession(data.session);
       if (!session) throw new AppError('not_authenticated', 'The code could not be verified.');
