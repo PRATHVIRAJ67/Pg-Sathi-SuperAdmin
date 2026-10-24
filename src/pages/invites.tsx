@@ -27,7 +27,18 @@ const waNumber = (phone: string | null) => {
   return d.length === 10 ? `91${d}` : d;
 };
 
-export function InviteOwnerDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+export function InviteOwnerDialog({
+  open,
+  onOpenChange,
+  initial,
+  onInvited,
+}: {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  /** Prefill, e.g. from a lead. */
+  initial?: Partial<{ email: string; owner_name: string; business_name: string; phone: string; note: string }>;
+  onInvited?: (invite: { id: string; email: string }) => void;
+}) {
   const { admin } = useBackend();
   const plans = useQuery({ queryKey: queryKeys.admin.plans(), queryFn: () => admin.listPlans() });
   const empty = { email: '', owner_name: '', business_name: '', phone: '', plan_id: '', note: '' };
@@ -35,7 +46,7 @@ export function InviteOwnerDialog({ open, onOpenChange }: { open: boolean; onOpe
   const [done, setDone] = useState<OwnerInvite | null>(null);
   useEffect(() => {
     if (open) {
-      setF(empty);
+      setF({ ...empty, ...Object.fromEntries(Object.entries(initial ?? {}).map(([k, v]) => [k, v ?? ''])) });
       setDone(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,6 +84,7 @@ export function InviteOwnerDialog({ open, onOpenChange }: { open: boolean; onOpe
                     .mutateAsync()
                     .then((r) => {
                       toast.success(`Invitation created for ${r.email}`);
+                      onInvited?.(r);
                       setDone({ ...f, email: r.email, id: r.id } as unknown as OwnerInvite);
                     })
                     .catch(() => undefined)

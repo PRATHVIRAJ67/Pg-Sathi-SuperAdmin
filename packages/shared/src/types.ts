@@ -797,6 +797,34 @@ export interface OwnerInviteInput {
   note?: string | null;
 }
 
+/** A "Book a demo" request from the marketing website. */
+export type LeadStatus = 'new' | 'contacted' | 'invited' | 'won' | 'lost';
+export interface Lead {
+  id: UUID;
+  business_name: string;
+  owner_name: string;
+  phone: string;
+  email: string | null;
+  city: string | null;
+  beds: string | null;
+  message: string | null;
+  status: LeadStatus;
+  admin_note: string | null;
+  invite_id: UUID | null;
+  created_at: Timestamp;
+  updated_at: Timestamp;
+}
+
+export interface LeadInput {
+  business_name: string;
+  owner_name: string;
+  phone: string;
+  email?: string | null;
+  city?: string | null;
+  beds?: string | null;
+  message?: string | null;
+}
+
 export interface PlatformSettings {
   default_plan_id: UUID | null;
   signup_enabled: boolean;

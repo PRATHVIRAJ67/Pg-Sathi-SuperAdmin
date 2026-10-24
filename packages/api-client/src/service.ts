@@ -4,6 +4,9 @@ import type {
   AdminPlan,
   AdminTenantDetail,
   AdminTenantRow,
+  Lead,
+  LeadInput,
+  LeadStatus,
   OwnerInvite,
   OwnerInviteInput,
   OwnerInviteStatus,
@@ -310,6 +313,8 @@ export function createDataService(transport: RpcTransport) {
 
     // Session & workspace -----------------------------------------------------
     myContext: () => call<UserContext>('my_context'),
+    /** Marketing website "Book a demo" form (works signed out). */
+    submitLead: (input: LeadInput) => call<{ ok: true }>('submit_lead', { p_data: compact(input) }),
     /** Works signed out: is sign-up open or invite-only? */
     signupStatus: () => call<{ open: boolean }>('signup_status'),
     /** The signed-in person's pending owner invite (to prefill onboarding), or null. */
@@ -494,6 +499,9 @@ export function createAdminService(transport: RpcTransport) {
     listOwnerInvites: (status: OwnerInviteStatus | 'all' = 'all') => call<OwnerInvite[]>('admin_list_owner_invites', { p_status: status }),
     inviteOwner: (input: OwnerInviteInput) => call<{ id: UUID; email: string }>('admin_invite_owner', { p_data: compact(input) }),
     revokeOwnerInvite: (inviteId: UUID) => call<void>('admin_revoke_owner_invite', { p_invite_id: inviteId }),
+    listLeads: (status: LeadStatus | 'open' | 'all' = 'open') => call<Lead[]>('admin_list_leads', { p_status: status }),
+    updateLead: (leadId: UUID, patch: { status?: LeadStatus; admin_note?: string | null; invite_id?: UUID | null }) =>
+      call<void>('admin_update_lead', { p_lead_id: leadId, p_data: compact(patch) }),
   };
 }
 

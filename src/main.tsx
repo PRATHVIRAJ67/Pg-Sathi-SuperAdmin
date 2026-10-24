@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes } from 'react-router';
 import { QueryClient, QueryClientProvider, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
-import { Activity, Building2, FlaskConical, Gauge, Layers, LogOut, Settings2, ShieldAlert } from 'lucide-react';
+import { Activity, Building2, FlaskConical, Gauge, Inbox, Layers, LogOut, Settings2, ShieldAlert } from 'lucide-react';
 import { AppError, type AuthSession } from '@pg/api-client';
 import { BackendProvider, useBackend } from '@pg/api-client/react';
 import { Button } from '@pg/ui-web/ui/button';
@@ -18,6 +18,7 @@ import { bootBackend, type BootResult } from './backend';
 import { OverviewPage } from './pages/overview';
 import { TenantDetailPage, TenantsPage } from './pages/tenants';
 import { PlansPage } from './pages/plans';
+import { LeadsPage } from './pages/leads';
 import { AuditPage, PlatformSettingsPage } from './pages/audit-settings';
 
 const queryClient = new QueryClient({
@@ -109,6 +110,7 @@ function SignIn() {
 
 const NAV = [
   { to: '/', label: 'Overview', icon: Gauge, end: true },
+  { to: '/leads', label: 'Leads', icon: Inbox },
   { to: '/tenants', label: 'Tenants', icon: Building2 },
   { to: '/plans', label: 'Plans', icon: Layers },
   { to: '/audit', label: 'Audit log', icon: Activity },
@@ -192,6 +194,7 @@ function App() {
     <Routes>
       <Route element={<AdminGate session={session} />}>
         <Route index element={<OverviewPage />} />
+        <Route path="leads" element={<LeadsPage />} />
         <Route path="tenants" element={<TenantsPage />} />
         <Route path="tenants/:tenantId" element={<TenantDetailPage />} />
         <Route path="plans" element={<PlansPage />} />
