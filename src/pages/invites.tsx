@@ -11,7 +11,7 @@ import { Dialog, DialogContent, Segmented } from '@pg/ui-web/ui/overlays';
 import { ConfirmDialog, EmptyState, ErrorState, Field, InlineError } from '@pg/ui-web/common';
 
 /** Where owners sign up (the owner dashboard). */
-export const OWNER_APP_URL = ((import.meta.env.VITE_OWNER_APP_URL as string | undefined)?.trim() || 'https://pg-sathi-admin.prathviholla67.workers.dev').replace(/\/$/, '');
+export const OWNER_APP_URL = ((import.meta.env.VITE_OWNER_APP_URL as string | undefined)?.trim() || 'https://app.pgsathi.online').replace(/\/$/, '');
 
 export const inviteLink = (email: string) => `${OWNER_APP_URL}/sign-up?email=${encodeURIComponent(email)}&invited=1`;
 

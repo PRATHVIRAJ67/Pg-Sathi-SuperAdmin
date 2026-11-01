@@ -3,6 +3,10 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "pg-sathi-super-admin",
   "compatibility_date": "2026-10-01",
+  // Keep the workers.dev address alive next to the custom domain.
+  "workers_dev": true,
+  // Needs pgsathi.online to be Active in Cloudflare before the next deploy.
+  "routes": [{ "pattern": "admin.pgsathi.online", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     // Serve index.html for client-side routes like /tenants/:id.
